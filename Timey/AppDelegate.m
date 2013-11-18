@@ -7,29 +7,129 @@
 //
 
 #import "AppDelegate.h"
+#import "StatusItemView.h"
+
+@interface AppDelegate () {
+	StatusItemView *_statusItemView;
+}
+
+@end
 
 @implementation AppDelegate
+
+@synthesize popover;
 
 @synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
 @synthesize managedObjectModel = _managedObjectModel;
 @synthesize managedObjectContext = _managedObjectContext;
 
-- (void)applicationDidFinishLaunching:(NSNotification *)aNotification
-{
-	// Insert code here to initialize your application
+//
+// NSApplicationDelegate Methods
+//
+#pragma mark - NSApplicationDelegate Methods -
+
+- (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
+	_statusItemView = [[StatusItemView alloc] init];
+	[_statusItemView setImage:[NSImage imageNamed:@"StatusIcon"]];
+	[_statusItemView setTarget:self];
+	[_statusItemView setAction:@selector(togglePanel:)];
 }
 
-// Returns the directory the application uses to store the Core Data store file. This code uses a directory named "com.movinpixel.Timey" in the user's Application Support directory.
-- (NSURL *)applicationFilesDirectory
-{
+- (NSApplicationTerminateReply)applicationShouldTerminate:(NSApplication *)sender {
+    if (!_managedObjectContext) {
+        return NSTerminateNow;
+    }
+    
+    if (![[self managedObjectContext] commitEditing]) {
+        NSLog(@"%@:%@ unable to commit editing to terminate", [self class], NSStringFromSelector(_cmd));
+        return NSTerminateCancel;
+    }
+    
+    if (![[self managedObjectContext] hasChanges]) {
+        return NSTerminateNow;
+    }
+    
+    NSError *error = nil;
+    if (![[self managedObjectContext] save:&error]) {
+		
+        // Customize this code block to include application-specific recovery steps.
+        BOOL result = [sender presentError:error];
+        if (result) {
+            return NSTerminateCancel;
+        }
+		
+        NSString *question = NSLocalizedString(@"Could not save changes while quitting. Quit anyway?", @"Quit without saves error question message");
+        NSString *info = NSLocalizedString(@"Quitting now will lose any changes you have made since the last successful save", @"Quit without saves error question info");
+        NSString *quitButton = NSLocalizedString(@"Quit anyway", @"Quit anyway button title");
+        NSString *cancelButton = NSLocalizedString(@"Cancel", @"Cancel button title");
+        NSAlert *alert = [[NSAlert alloc] init];
+        [alert setMessageText:question];
+        [alert setInformativeText:info];
+        [alert addButtonWithTitle:quitButton];
+        [alert addButtonWithTitle:cancelButton];
+		
+        NSInteger answer = [alert runModal];
+        
+        if (answer == NSAlertAlternateReturn) {
+            return NSTerminateCancel;
+        }
+    }
+	
+    return NSTerminateNow;
+}
+
+//
+// NSWindowDelegate Methods
+//
+#pragma mark - NSWindowDelegate Methods -
+
+- (NSUndoManager *)windowWillReturnUndoManager:(NSWindow *)window {
+    return [[self managedObjectContext] undoManager];
+}
+
+//
+// AppDelegate Private Methods
+//
+#pragma mark - AppDelegate Private Methods -
+
+- (NSURL *)applicationFilesDirectory {
     NSFileManager *fileManager = [NSFileManager defaultManager];
     NSURL *appSupportURL = [[fileManager URLsForDirectory:NSApplicationSupportDirectory inDomains:NSUserDomainMask] lastObject];
     return [appSupportURL URLByAppendingPathComponent:@"com.movinpixel.Timey"];
 }
 
-// Creates if necessary and returns the managed object model for the application.
-- (NSManagedObjectModel *)managedObjectModel
-{
+- (IBAction)togglePanel:(id)sender {
+	if (![(StatusItemView *)sender isHighlighted]) {
+		[[self popover] showRelativeToRect:[sender bounds] ofView:sender preferredEdge:NSMinYEdge];
+	} else {
+		[[self popover] close];
+	}
+	[(StatusItemView *)sender setHighlighted:![(StatusItemView *)sender isHighlighted]];
+}
+
+//
+// AppDelegate Methods
+//
+#pragma mark - AppDelegate Methods -
+
+- (IBAction)saveAction:(id)sender {
+    NSError *error = nil;
+    
+    if (![[self managedObjectContext] commitEditing]) {
+        NSLog(@"%@:%@ unable to commit editing before saving", [self class], NSStringFromSelector(_cmd));
+    }
+    
+    if (![[self managedObjectContext] save:&error]) {
+        [[NSApplication sharedApplication] presentError:error];
+    }
+}
+
+//
+// AppDelegate Properties
+//
+#pragma mark - AppDelegate Properties -
+
+- (NSManagedObjectModel *)managedObjectModel {
     if (_managedObjectModel) {
         return _managedObjectModel;
     }
@@ -39,9 +139,7 @@
     return _managedObjectModel;
 }
 
-// Returns the persistent store coordinator for the application. This implementation creates and return a coordinator, having added the store for the application to it. (The directory for the store is created, if necessary.)
-- (NSPersistentStoreCoordinator *)persistentStoreCoordinator
-{
+- (NSPersistentStoreCoordinator *)persistentStoreCoordinator {
     if (_persistentStoreCoordinator) {
         return _persistentStoreCoordinator;
     }
@@ -92,9 +190,7 @@
     return _persistentStoreCoordinator;
 }
 
-// Returns the managed object context for the application (which is already bound to the persistent store coordinator for the application.) 
-- (NSManagedObjectContext *)managedObjectContext
-{
+- (NSManagedObjectContext *)managedObjectContext {
     if (_managedObjectContext) {
         return _managedObjectContext;
     }
@@ -112,72 +208,6 @@
     [_managedObjectContext setPersistentStoreCoordinator:coordinator];
 
     return _managedObjectContext;
-}
-
-// Returns the NSUndoManager for the application. In this case, the manager returned is that of the managed object context for the application.
-- (NSUndoManager *)windowWillReturnUndoManager:(NSWindow *)window
-{
-    return [[self managedObjectContext] undoManager];
-}
-
-// Performs the save action for the application, which is to send the save: message to the application's managed object context. Any encountered errors are presented to the user.
-- (IBAction)saveAction:(id)sender
-{
-    NSError *error = nil;
-    
-    if (![[self managedObjectContext] commitEditing]) {
-        NSLog(@"%@:%@ unable to commit editing before saving", [self class], NSStringFromSelector(_cmd));
-    }
-    
-    if (![[self managedObjectContext] save:&error]) {
-        [[NSApplication sharedApplication] presentError:error];
-    }
-}
-
-- (NSApplicationTerminateReply)applicationShouldTerminate:(NSApplication *)sender
-{
-    // Save changes in the application's managed object context before the application terminates.
-    
-    if (!_managedObjectContext) {
-        return NSTerminateNow;
-    }
-    
-    if (![[self managedObjectContext] commitEditing]) {
-        NSLog(@"%@:%@ unable to commit editing to terminate", [self class], NSStringFromSelector(_cmd));
-        return NSTerminateCancel;
-    }
-    
-    if (![[self managedObjectContext] hasChanges]) {
-        return NSTerminateNow;
-    }
-    
-    NSError *error = nil;
-    if (![[self managedObjectContext] save:&error]) {
-
-        // Customize this code block to include application-specific recovery steps.              
-        BOOL result = [sender presentError:error];
-        if (result) {
-            return NSTerminateCancel;
-        }
-
-        NSString *question = NSLocalizedString(@"Could not save changes while quitting. Quit anyway?", @"Quit without saves error question message");
-        NSString *info = NSLocalizedString(@"Quitting now will lose any changes you have made since the last successful save", @"Quit without saves error question info");
-        NSString *quitButton = NSLocalizedString(@"Quit anyway", @"Quit anyway button title");
-        NSString *cancelButton = NSLocalizedString(@"Cancel", @"Cancel button title");
-        NSAlert *alert = [[NSAlert alloc] init];
-        [alert setMessageText:question];
-        [alert setInformativeText:info];
-        [alert addButtonWithTitle:quitButton];
-        [alert addButtonWithTitle:cancelButton];
-
-        NSInteger answer = [alert runModal];
-        
-        if (answer == NSAlertAlternateReturn) {
-            return NSTerminateCancel;
-        }
-    }
-
-    return NSTerminateNow;
 }
 
 @end
