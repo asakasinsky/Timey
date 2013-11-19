@@ -30,6 +30,8 @@
 - (IBAction)saveAction:(id)sender;
 - (IBAction)addTaskAction:(id)sender;
 - (IBAction)removeTaskAction:(id)sender;
+- (IBAction)resetTimerAction:(id)sender;
+- (IBAction)resetAllTimersAction:(id)sender;
 
 - (IBAction)backToTasksAction:(id)sender;
 - (IBAction)saveTaskAction:(id)sender;

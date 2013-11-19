@@ -36,7 +36,13 @@
 #pragma mark - NSApplicationDelegate Methods -
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
+	NSLog(@"%@", [[self applicationFilesDirectory] path]);
+	
 	[self statusItemView];
+	
+	[tasksTableView setTarget:self];
+	[tasksTableView setDoubleAction:@selector(tasksTableViewDoubleClickAction:)];
+	
 	[containerView addSubview:tasksView];
 }
 
@@ -116,10 +122,12 @@
 	
 	NSTextField *cellTaskNameTextField = [view viewWithTag:1];
 	NSTextField *cellTimerTextField = [view viewWithTag:2];
+	NSImageView *cellTimeRunningImageView = [view viewWithTag:3];
 	
 	Task *task = [tasks objectAtIndex:row];
 	[cellTaskNameTextField setStringValue:[task title]];
 	[cellTimerTextField setStringValue:[task formattedTimeLeft]];
+	[cellTimeRunningImageView setHidden:![task isRunning]];
 	
 	return view;
 }
@@ -144,6 +152,21 @@
 		[[self popover] close];
 	}
 	[(StatusItemView *)sender setHighlighted:![(StatusItemView *)sender isHighlighted]];
+}
+
+- (IBAction)tasksTableViewDoubleClickAction:(id)sender {
+	Task *task = [tasks objectAtIndex:[[self tasksTableView] clickedRow]];
+	
+	if ([task isRunning]) {
+		[task stopTimer];
+	} else {
+		for (Task *t in tasks) {
+			[task stopTimer];
+		}
+		[task startTimer];
+	}
+	
+	[[self tasksTableView] reloadData];
 }
 
 - (void)reloadData {
@@ -200,10 +223,27 @@
 }
 
 - (IBAction)removeTaskAction:(id)sender {
-	Task *task = [tasks objectAtIndex:[[self tasksTableView] selectedRow]];
-	[[self managedObjectContext] deleteObject:task];
-	[self saveAction:sender];
-	[self reloadData];
+	if ([[self tasksTableView] selectedRow] >= 0) {
+		Task *task = [tasks objectAtIndex:[[self tasksTableView] selectedRow]];
+		[[self managedObjectContext] deleteObject:task];
+		[self saveAction:sender];
+		[self reloadData];
+	}
+}
+
+- (IBAction)resetTimerAction:(id)sender {
+	if ([[self tasksTableView] selectedRow] >= 0) {
+		Task *task = [tasks objectAtIndex:[[self tasksTableView] selectedRow]];
+		[task resetTimer];
+		[[self tasksTableView] reloadData];
+	}
+}
+
+- (IBAction)resetAllTimersAction:(id)sender {
+	for (Task *task in tasks) {
+		[task resetTimer];
+	}
+	[[self tasksTableView] reloadData];
 }
 
 - (IBAction)backToTasksAction:(id)sender {
@@ -214,6 +254,7 @@
 	Task *task = [[Task alloc] initWithEntity:[NSEntityDescription entityForName:@"Task" inManagedObjectContext:[self managedObjectContext]] insertIntoManagedObjectContext:[self managedObjectContext]];
 	[task setTitle:[taskNameTextField stringValue]];
 	[task setFormattedAllocatedTime:[taskTimeTextField stringValue]];
+	[task resetTimer];
 	[self saveAction:sender];
 	
 	[self reloadData];

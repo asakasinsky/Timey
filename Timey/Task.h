@@ -10,9 +10,12 @@
 #import <CoreData/CoreData.h>
 
 
-@interface Task : NSManagedObject
+@interface Task : NSManagedObject {
+	NSTimer *runningTimer;
+}
 
 @property (nonatomic, retain) NSNumber * allocatedTime;
+@property (nonatomic, retain) NSNumber * remainingTime;
 @property (nonatomic, retain) NSDate * timeStarted;
 @property (nonatomic, retain) NSString * title;
 

@@ -12,6 +12,7 @@
 @implementation Task
 
 @dynamic allocatedTime;
+@dynamic remainingTime;
 @dynamic timeStarted;
 @dynamic title;
 

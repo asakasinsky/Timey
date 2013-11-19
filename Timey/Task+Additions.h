@@ -18,4 +18,9 @@
 
 - (void)setFormattedAllocatedTime:(NSString *)allocatedTime;
 
+- (BOOL)isRunning;
+- (void)startTimer;
+- (void)stopTimer;
+- (void)resetTimer;
+
 @end
