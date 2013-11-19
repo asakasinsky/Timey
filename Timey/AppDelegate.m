@@ -8,9 +8,10 @@
 
 #import "AppDelegate.h"
 #import "StatusItemView.h"
+#import "Task+Additions.h"
 
 @interface AppDelegate () {
-	StatusItemView *_statusItemView;
+	NSArray *tasks;
 }
 
 @end
@@ -18,7 +19,13 @@
 @implementation AppDelegate
 
 @synthesize popover;
-
+@synthesize containerView;
+@synthesize tasksView;
+@synthesize tasksTableView;
+@synthesize addTaskView;
+@synthesize taskNameTextField;
+@synthesize taskTimeTextField;
+@synthesize statusItemView = _statusItemView;
 @synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
 @synthesize managedObjectModel = _managedObjectModel;
 @synthesize managedObjectContext = _managedObjectContext;
@@ -29,10 +36,13 @@
 #pragma mark - NSApplicationDelegate Methods -
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
-	_statusItemView = [[StatusItemView alloc] init];
-	[_statusItemView setImage:[NSImage imageNamed:@"StatusIcon"]];
-	[_statusItemView setTarget:self];
-	[_statusItemView setAction:@selector(togglePanel:)];
+	[self statusItemView];
+	[containerView addSubview:tasksView];
+}
+
+- (void)applicationDidResignActive:(NSNotification *)notification {
+	[[self popover] close];
+	[_statusItemView setHighlighted:NO];
 }
 
 - (NSApplicationTerminateReply)applicationShouldTerminate:(NSApplication *)sender {
@@ -88,6 +98,33 @@
 }
 
 //
+// NSTableViewDataSource Methods
+//
+#pragma mark - NSTableViewDataSource Methods -
+
+- (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView {
+	return [tasks count];
+}
+
+//
+// NSTableViewDelegate Methods
+//
+#pragma mark - NSTableViewDelegate Methods -
+
+- (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
+	NSView *view = [tableView makeViewWithIdentifier:@"TaskCell" owner:self];
+	
+	NSTextField *cellTaskNameTextField = [view viewWithTag:1];
+	NSTextField *cellTimerTextField = [view viewWithTag:2];
+	
+	Task *task = [tasks objectAtIndex:row];
+	[cellTaskNameTextField setStringValue:[task title]];
+	[cellTimerTextField setStringValue:[task formattedTimeLeft]];
+	
+	return view;
+}
+
+//
 // AppDelegate Private Methods
 //
 #pragma mark - AppDelegate Private Methods -
@@ -100,11 +137,32 @@
 
 - (IBAction)togglePanel:(id)sender {
 	if (![(StatusItemView *)sender isHighlighted]) {
+		[[NSApplication sharedApplication] activateIgnoringOtherApps:YES];
 		[[self popover] showRelativeToRect:[sender bounds] ofView:sender preferredEdge:NSMinYEdge];
+		[self reloadData];
 	} else {
 		[[self popover] close];
 	}
 	[(StatusItemView *)sender setHighlighted:![(StatusItemView *)sender isHighlighted]];
+}
+
+- (void)reloadData {
+	NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"Task"];
+	tasks = [[self managedObjectContext] executeFetchRequest:request error:nil];
+	[[self tasksTableView] reloadData];
+}
+
+- (void)popToTasksView {
+	[containerView addSubview:tasksView];
+	[tasksView setFrameOrigin:NSMakePoint(containerView.frame.size.width * -1, 0)];
+	
+	[NSAnimationContext runAnimationGroup:^(NSAnimationContext *context) {
+		[context setDuration:0.5];
+		[[addTaskView animator] setFrameOrigin:NSMakePoint(containerView.frame.size.width, 0)];
+		[[tasksView animator] setFrameOrigin:NSMakePoint(0, 0)];
+	} completionHandler:^{
+		[addTaskView removeFromSuperview];
+	}];
 }
 
 //
@@ -124,10 +182,58 @@
     }
 }
 
+- (IBAction)addTaskAction:(id)sender {
+	[containerView addSubview:addTaskView];
+	[addTaskView setFrameOrigin:NSMakePoint(containerView.frame.size.width, 0)];
+	
+	[taskNameTextField setStringValue:@"New Task"];
+	[taskTimeTextField setStringValue:@"02:00"];
+	
+	[NSAnimationContext runAnimationGroup:^(NSAnimationContext *context) {
+		[context setDuration:0.5];
+		[[tasksView animator] setFrameOrigin:NSMakePoint(tasksView.frame.size.width * -1, 0)];
+		[[addTaskView animator] setFrameOrigin:NSMakePoint(0, 0)];
+	} completionHandler:^{
+		[tasksView removeFromSuperview];
+		[taskNameTextField becomeFirstResponder];
+	}];
+}
+
+- (IBAction)removeTaskAction:(id)sender {
+	Task *task = [tasks objectAtIndex:[[self tasksTableView] selectedRow]];
+	[[self managedObjectContext] deleteObject:task];
+	[self saveAction:sender];
+	[self reloadData];
+}
+
+- (IBAction)backToTasksAction:(id)sender {
+	[self popToTasksView];
+}
+
+- (IBAction)saveTaskAction:(id)sender {
+	Task *task = [[Task alloc] initWithEntity:[NSEntityDescription entityForName:@"Task" inManagedObjectContext:[self managedObjectContext]] insertIntoManagedObjectContext:[self managedObjectContext]];
+	[task setTitle:[taskNameTextField stringValue]];
+	[task setFormattedAllocatedTime:[taskTimeTextField stringValue]];
+	[self saveAction:sender];
+	
+	[self reloadData];
+	[self popToTasksView];
+}
+
 //
 // AppDelegate Properties
 //
 #pragma mark - AppDelegate Properties -
+
+- (StatusItemView *)statusItemView {
+	if (!_statusItemView) {
+		_statusItemView = [[StatusItemView alloc] init];
+		[_statusItemView setImage:[NSImage imageNamed:@"StatusIcon"]];
+		[_statusItemView setTarget:self];
+		[_statusItemView setAction:@selector(togglePanel:)];
+	}
+	return _statusItemView;
+}
 
 - (NSManagedObjectModel *)managedObjectModel {
     if (_managedObjectModel) {

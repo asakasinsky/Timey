@@ -20,6 +20,10 @@
 		9AA06524183A2BE300C1F697 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9AA06522183A2BE300C1F697 /* InfoPlist.strings */; };
 		9AA06526183A2BE300C1F697 /* TimeyTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AA06525183A2BE300C1F697 /* TimeyTests.m */; };
 		9AA06535183A3A3700C1F697 /* StatusItemView.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AA06534183A3A3700C1F697 /* StatusItemView.m */; };
+		9AA06537183ABDF800C1F697 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9AA06536183ABDF800C1F697 /* QuartzCore.framework */; };
+		9AA68203183AF302008E109D /* Task.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AA68201183AF302008E109D /* Task.m */; };
+		9AA68216183B00AB008E109D /* NSWindow+FirstResponder.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AA68214183B00AB008E109D /* NSWindow+FirstResponder.m */; };
+		9AA6821B183B0759008E109D /* Task+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AA68219183B0759008E109D /* Task+Additions.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +59,13 @@
 		9AA06525183A2BE300C1F697 /* TimeyTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = TimeyTests.m; sourceTree = "<group>"; };
 		9AA06533183A3A3700C1F697 /* StatusItemView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StatusItemView.h; sourceTree = "<group>"; };
 		9AA06534183A3A3700C1F697 /* StatusItemView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StatusItemView.m; sourceTree = "<group>"; };
+		9AA06536183ABDF800C1F697 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		9AA68200183AF302008E109D /* Task.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; path = Task.h; sourceTree = "<group>"; };
+		9AA68201183AF302008E109D /* Task.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Task.m; sourceTree = "<group>"; };
+		9AA68213183B00AB008E109D /* NSWindow+FirstResponder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; path = "NSWindow+FirstResponder.h"; sourceTree = "<group>"; };
+		9AA68214183B00AB008E109D /* NSWindow+FirstResponder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSWindow+FirstResponder.m"; sourceTree = "<group>"; };
+		9AA68218183B0759008E109D /* Task+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; path = "Task+Additions.h"; sourceTree = "<group>"; };
+		9AA68219183B0759008E109D /* Task+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Task+Additions.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -62,6 +73,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9AA06537183ABDF800C1F697 /* QuartzCore.framework in Frameworks */,
 				9AA064F9183A2BE200C1F697 /* Cocoa.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -100,6 +112,7 @@
 		9AA064F7183A2BE200C1F697 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				9AA06536183ABDF800C1F697 /* QuartzCore.framework */,
 				9AA064F8183A2BE200C1F697 /* Cocoa.framework */,
 				9AA0651A183A2BE300C1F697 /* XCTest.framework */,
 				9AA064FA183A2BE200C1F697 /* Other Frameworks */,
@@ -120,8 +133,9 @@
 		9AA064FE183A2BE200C1F697 /* Timey */ = {
 			isa = PBXGroup;
 			children = (
-				9AA06532183A3A2D00C1F697 /* Views */,
 				9AA06530183A2C4F00C1F697 /* Models */,
+				9AA6820A183AFECA008E109D /* Additions */,
+				9AA06532183A3A2D00C1F697 /* Views */,
 				9AA0650A183A2BE200C1F697 /* AppDelegate.h */,
 				9AA0650B183A2BE300C1F697 /* AppDelegate.m */,
 				9AA0652F183A2C4000C1F697 /* Resources */,
@@ -163,7 +177,7 @@
 		9AA0652F183A2C4000C1F697 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				9AA06531183A2C9600C1F697 /* UI */,
+				9AA0650D183A2BE300C1F697 /* MainMenu.xib */,
 				9AA06513183A2BE300C1F697 /* Images.xcassets */,
 			);
 			name = Resources;
@@ -172,17 +186,11 @@
 		9AA06530183A2C4F00C1F697 /* Models */ = {
 			isa = PBXGroup;
 			children = (
+				9AA68217183B0746008E109D /* Additions */,
+				9AA68204183AF310008E109D /* Classes */,
 				9AA06510183A2BE300C1F697 /* Timey.xcdatamodeld */,
 			);
 			name = Models;
-			sourceTree = "<group>";
-		};
-		9AA06531183A2C9600C1F697 /* UI */ = {
-			isa = PBXGroup;
-			children = (
-				9AA0650D183A2BE300C1F697 /* MainMenu.xib */,
-			);
-			name = UI;
 			sourceTree = "<group>";
 		};
 		9AA06532183A3A2D00C1F697 /* Views */ = {
@@ -192,6 +200,33 @@
 				9AA06534183A3A3700C1F697 /* StatusItemView.m */,
 			);
 			name = Views;
+			sourceTree = "<group>";
+		};
+		9AA68204183AF310008E109D /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				9AA68200183AF302008E109D /* Task.h */,
+				9AA68201183AF302008E109D /* Task.m */,
+			);
+			name = Classes;
+			sourceTree = "<group>";
+		};
+		9AA6820A183AFECA008E109D /* Additions */ = {
+			isa = PBXGroup;
+			children = (
+				9AA68213183B00AB008E109D /* NSWindow+FirstResponder.h */,
+				9AA68214183B00AB008E109D /* NSWindow+FirstResponder.m */,
+			);
+			name = Additions;
+			sourceTree = "<group>";
+		};
+		9AA68217183B0746008E109D /* Additions */ = {
+			isa = PBXGroup;
+			children = (
+				9AA68218183B0759008E109D /* Task+Additions.h */,
+				9AA68219183B0759008E109D /* Task+Additions.m */,
+			);
+			name = Additions;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -293,8 +328,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				9AA06512183A2BE300C1F697 /* Timey.xcdatamodeld in Sources */,
+				9AA6821B183B0759008E109D /* Task+Additions.m in Sources */,
 				9AA06535183A3A3700C1F697 /* StatusItemView.m in Sources */,
 				9AA0650C183A2BE300C1F697 /* AppDelegate.m in Sources */,
+				9AA68203183AF302008E109D /* Task.m in Sources */,
+				9AA68216183B00AB008E109D /* NSWindow+FirstResponder.m in Sources */,
 				9AA06505183A2BE200C1F697 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -508,6 +546,7 @@
 				9AA0652B183A2BE300C1F697 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		9AA0652C183A2BE300C1F697 /* Build configuration list for PBXNativeTarget "TimeyTests" */ = {
 			isa = XCConfigurationList;
@@ -516,6 +555,7 @@
 				9AA0652E183A2BE300C1F697 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
