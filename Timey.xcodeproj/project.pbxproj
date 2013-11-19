@@ -25,6 +25,7 @@
 		9AA68203183AF302008E109D /* Task.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AA68201183AF302008E109D /* Task.m */; };
 		9AA68216183B00AB008E109D /* NSWindow+FirstResponder.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AA68214183B00AB008E109D /* NSWindow+FirstResponder.m */; };
 		9AA6821B183B0759008E109D /* Task+Additions.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AA68219183B0759008E109D /* Task+Additions.m */; };
+		9AC187D0183BB706003B6818 /* LaunchAtLoginController.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AC187CF183BB706003B6818 /* LaunchAtLoginController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -70,6 +71,8 @@
 		9AA68214183B00AB008E109D /* NSWindow+FirstResponder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSWindow+FirstResponder.m"; sourceTree = "<group>"; };
 		9AA68218183B0759008E109D /* Task+Additions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.objj.h; path = "Task+Additions.h"; sourceTree = "<group>"; };
 		9AA68219183B0759008E109D /* Task+Additions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Task+Additions.m"; sourceTree = "<group>"; };
+		9AC187CE183BB706003B6818 /* LaunchAtLoginController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LaunchAtLoginController.h; sourceTree = "<group>"; };
+		9AC187CF183BB706003B6818 /* LaunchAtLoginController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LaunchAtLoginController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -138,6 +141,7 @@
 			isa = PBXGroup;
 			children = (
 				9AA06530183A2C4F00C1F697 /* Models */,
+				9AC187CA183BB5A0003B6818 /* Libraries */,
 				9AA6820A183AFECA008E109D /* Additions */,
 				9AA06532183A3A2D00C1F697 /* Views */,
 				95F2297E183B1CCE00E0DE4C /* TasksManager.h */,
@@ -234,6 +238,15 @@
 				9AA68219183B0759008E109D /* Task+Additions.m */,
 			);
 			name = Additions;
+			sourceTree = "<group>";
+		};
+		9AC187CA183BB5A0003B6818 /* Libraries */ = {
+			isa = PBXGroup;
+			children = (
+				9AC187CE183BB706003B6818 /* LaunchAtLoginController.h */,
+				9AC187CF183BB706003B6818 /* LaunchAtLoginController.m */,
+			);
+			name = Libraries;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -334,6 +347,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9AC187D0183BB706003B6818 /* LaunchAtLoginController.m in Sources */,
 				9AA06512183A2BE300C1F697 /* Timey.xcdatamodeld in Sources */,
 				9AA6821B183B0759008E109D /* Task+Additions.m in Sources */,
 				95F22980183B1CCE00E0DE4C /* TasksManager.m in Sources */,

@@ -10,6 +10,13 @@
 #import "StatusItemView.h"
 #import "Task+Additions.h"
 #import "TasksManager.h"
+#import "LaunchAtLoginController.h"
+
+@interface AppDelegate () {
+	LaunchAtLoginController *_launchAtloginController;
+}
+
+@end
 
 @implementation AppDelegate
 
@@ -35,6 +42,8 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
 	NSLog(@"%@", [[self applicationFilesDirectory] path]);
+	
+	_launchAtloginController = [[LaunchAtLoginController alloc] init];
 	
 	[self statusItemView];
 	
@@ -245,11 +254,16 @@
 }
 
 - (IBAction)settingsAction:(id)sender {
+	if ([_launchAtloginController launchAtLogin]) {
+		[startAtLoginMenuItem setState:NSOnState];
+	} else {
+		[startAtLoginMenuItem setState:NSOffState];
+	}
 	[NSMenu popUpContextMenu:[self settingsMenu] withEvent:[NSApp currentEvent] forView:sender];
 }
 
 - (IBAction)toggleStartAtLogin:(id)sender {
-	//
+	[_launchAtloginController setLaunchAtLogin:![_launchAtloginController launchAtLogin]];
 }
 
 - (IBAction)backToTasksAction:(id)sender {
