@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		95F22980183B1CCE00E0DE4C /* TasksManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 95F2297F183B1CCE00E0DE4C /* TasksManager.m */; };
+		9A024D27183C10BF0011CCF9 /* Fonts in Resources */ = {isa = PBXBuildFile; fileRef = 9A024D26183C10BF0011CCF9 /* Fonts */; };
 		9AA064F9183A2BE200C1F697 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9AA064F8183A2BE200C1F697 /* Cocoa.framework */; };
 		9AA06503183A2BE200C1F697 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9AA06501183A2BE200C1F697 /* InfoPlist.strings */; };
 		9AA06505183A2BE200C1F697 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AA06504183A2BE200C1F697 /* main.m */; };
@@ -42,6 +43,7 @@
 		95F2297E183B1CCE00E0DE4C /* TasksManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TasksManager.h; sourceTree = "<group>"; };
 		95F2297F183B1CCE00E0DE4C /* TasksManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TasksManager.m; sourceTree = "<group>"; };
 		95F22981183B1CEC00E0DE4C /* TasksManagerDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TasksManagerDelegate.h; sourceTree = "<group>"; };
+		9A024D26183C10BF0011CCF9 /* Fonts */ = {isa = PBXFileReference; lastKnownFileType = folder; path = Fonts; sourceTree = "<group>"; };
 		9AA064F5183A2BE200C1F697 /* Timey.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Timey.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9AA064F8183A2BE200C1F697 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		9AA064FB183A2BE200C1F697 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -188,6 +190,7 @@
 		9AA0652F183A2C4000C1F697 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				9A024D26183C10BF0011CCF9 /* Fonts */,
 				9AA0650D183A2BE300C1F697 /* MainMenu.xib */,
 				9AA06513183A2BE300C1F697 /* Images.xcassets */,
 			);
@@ -325,6 +328,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9A024D27183C10BF0011CCF9 /* Fonts in Resources */,
 				9AA06503183A2BE200C1F697 /* InfoPlist.strings in Resources */,
 				9AA06514183A2BE300C1F697 /* Images.xcassets in Resources */,
 				9AA06509183A2BE200C1F697 /* Credits.rtf in Resources */,
