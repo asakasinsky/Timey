@@ -982,13 +982,18 @@
         </customView>
         <menu id="cF6-WE-jcD">
             <items>
+                <menuItem title="About" id="vDh-Ch-bDv">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="orderFrontStandardAboutPanel:" target="-2" id="cic-WL-fDp"/>
+                    </connections>
+                </menuItem>
                 <menuItem title="Start At Login" state="on" id="IQn-jb-Epm">
                     <modifierMask key="keyEquivalentModifierMask"/>
                     <connections>
                         <action selector="toggleStartAtLogin:" target="494" id="gC3-1s-nFm"/>
                     </connections>
                 </menuItem>
-                <menuItem isSeparatorItem="YES" id="Bcb-P0-d1f"/>
                 <menuItem title="Quit Timey" keyEquivalent="q" id="0Uc-BW-n4L">
                     <connections>
                         <action selector="terminate:" target="-3" id="dKq-zu-k1C"/>
