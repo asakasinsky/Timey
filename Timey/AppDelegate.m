@@ -17,6 +17,8 @@
 @synthesize containerView;
 @synthesize tasksView;
 @synthesize tasksTableView;
+@synthesize settingsMenu;
+@synthesize startAtLoginMenuItem;
 @synthesize addTaskView;
 @synthesize taskNameTextField;
 @synthesize taskTimeTextField;
@@ -240,6 +242,14 @@
 - (IBAction)resetAllTimersAction:(id)sender {
 	[[self tasksManager] resetAllTimers];
 	[[self tasksTableView] reloadData];
+}
+
+- (IBAction)settingsAction:(id)sender {
+	[NSMenu popUpContextMenu:[self settingsMenu] withEvent:[NSApp currentEvent] forView:sender];
+}
+
+- (IBAction)toggleStartAtLogin:(id)sender {
+	//
 }
 
 - (IBAction)backToTasksAction:(id)sender {

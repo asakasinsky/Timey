@@ -652,6 +652,8 @@
                 <outlet property="addTaskView" destination="K1J-4c-XA8" id="Czh-4G-wUn"/>
                 <outlet property="containerView" destination="hfq-5S-nXT" id="OHm-iV-Kqd"/>
                 <outlet property="popover" destination="W8P-2g-4Mj" id="4QU-96-yOa"/>
+                <outlet property="settingsMenu" destination="cF6-WE-jcD" id="y6r-L0-vXe"/>
+                <outlet property="startAtLoginMenuItem" destination="IQn-jb-Epm" id="fB1-sf-lOy"/>
                 <outlet property="taskNameTextField" destination="WKM-YM-5wU" id="2rS-gW-4vU"/>
                 <outlet property="taskTimeTextField" destination="Bkb-n8-5xp" id="Nsj-4o-nLc"/>
                 <outlet property="tasksTableView" destination="ceR-7P-pI4" id="0zs-LX-7LE"/>
@@ -739,6 +741,9 @@
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                 <font key="font" metaFont="system"/>
                             </buttonCell>
+                            <connections>
+                                <action selector="settingsAction:" target="494" id="YQv-s1-RlD"/>
+                            </connections>
                         </button>
                         <button toolTip="Reset Selected Timer" appearanceType="lightContent" translatesAutoresizingMaskIntoConstraints="NO" id="Z1c-tM-KHi">
                             <rect key="frame" x="9" y="9" width="19" height="19"/>
@@ -786,14 +791,14 @@
                         <constraint firstItem="Z1c-tM-KHi" firstAttribute="top" secondItem="GDr-Jw-jR1" secondAttribute="top" constant="9" id="vcK-wN-FUa"/>
                     </constraints>
                 </customView>
-                <scrollView wantsLayer="YES" borderType="none" autohidesScrollers="YES" horizontalLineScroll="72" horizontalPageScroll="10" verticalLineScroll="72" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" translatesAutoresizingMaskIntoConstraints="NO" id="7kl-8a-AcM">
+                <scrollView wantsLayer="YES" borderType="none" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" translatesAutoresizingMaskIntoConstraints="NO" id="7kl-8a-AcM">
                     <rect key="frame" x="0.0" y="37" width="338" height="371"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <clipView key="contentView" wantsLayer="YES" drawsBackground="NO" copiesOnScroll="NO" id="k2C-nk-JLH">
                         <rect key="frame" x="0.0" y="0.0" width="338" height="371"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView wantsLayer="YES" verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnReordering="NO" columnSelection="YES" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" rowHeight="70" rowSizeStyle="automatic" viewBased="YES" id="ceR-7P-pI4">
+                            <tableView wantsLayer="YES" verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnReordering="NO" columnSelection="YES" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" viewBased="YES" id="ceR-7P-pI4">
                                 <rect key="frame" x="0.0" y="0.0" width="338" height="371"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <size key="intercellSpacing" width="3" height="2"/>
@@ -975,6 +980,22 @@
                 <constraint firstItem="Bkb-n8-5xp" firstAttribute="trailing" secondItem="WKM-YM-5wU" secondAttribute="trailing" id="pj0-jb-OhG"/>
             </constraints>
         </customView>
+        <menu id="cF6-WE-jcD">
+            <items>
+                <menuItem title="Start At Login" state="on" id="IQn-jb-Epm">
+                    <modifierMask key="keyEquivalentModifierMask"/>
+                    <connections>
+                        <action selector="toggleStartAtLogin:" target="494" id="gC3-1s-nFm"/>
+                    </connections>
+                </menuItem>
+                <menuItem isSeparatorItem="YES" id="Bcb-P0-d1f"/>
+                <menuItem title="Quit Timey" keyEquivalent="q" id="0Uc-BW-n4L">
+                    <connections>
+                        <action selector="terminate:" target="-3" id="dKq-zu-k1C"/>
+                    </connections>
+                </menuItem>
+            </items>
+        </menu>
     </objects>
     <resources>
         <image name="Add" width="19" height="19"/>

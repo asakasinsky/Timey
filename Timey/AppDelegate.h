@@ -19,6 +19,8 @@
 
 @property (assign) IBOutlet NSView *tasksView;
 @property (assign) IBOutlet NSTableView *tasksTableView;
+@property (assign) IBOutlet NSMenu *settingsMenu;
+@property (assign) IBOutlet NSMenuItem *startAtLoginMenuItem;
 
 @property (assign) IBOutlet NSView *addTaskView;
 @property (assign) IBOutlet NSTextField *taskNameTextField;
@@ -34,6 +36,8 @@
 - (IBAction)removeTaskAction:(id)sender;
 - (IBAction)resetTimerAction:(id)sender;
 - (IBAction)resetAllTimersAction:(id)sender;
+- (IBAction)settingsAction:(id)sender;
+- (IBAction)toggleStartAtLogin:(id)sender;
 
 - (IBAction)backToTasksAction:(id)sender;
 - (IBAction)saveTaskAction:(id)sender;
