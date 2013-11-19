@@ -57,6 +57,7 @@
 
 - (void)applicationDidResignActive:(NSNotification *)notification {
 	[[self popover] close];
+	[[self tasksManager] stopGeneratingTimerTicks];
 	[_statusItemView setHighlighted:NO];
 }
 
@@ -175,6 +176,7 @@
 }
 
 - (void)timerTickedFor:(Task *)task {
+	NSLog(@"Timer Ticked!");
 	[[self tasksTableView] reloadDataForRowIndexes:[NSIndexSet indexSetWithIndex:[[[self tasksManager] tasks] indexOfObject:task]] columnIndexes:[NSIndexSet indexSetWithIndex:0]];
 }
 
@@ -194,8 +196,10 @@
 		[[NSApplication sharedApplication] activateIgnoringOtherApps:YES];
 		[[self popover] showRelativeToRect:[sender bounds] ofView:sender preferredEdge:NSMinYEdge];
 		[[self tasksTableView] reloadData];
+		[[self tasksManager] startGeneratingTimerTicks];
 	} else {
 		[[self popover] close];
+		[[self tasksManager] stopGeneratingTimerTicks];
 	}
 	[(StatusItemView *)sender setHighlighted:![(StatusItemView *)sender isHighlighted]];
 }

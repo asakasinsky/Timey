@@ -94,6 +94,19 @@
 	}
 }
 
+- (void)startGeneratingTimerTicks {
+	if ([self currentTask] && !_updateTimer) {
+		_updateTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(updateTimer:) userInfo:nil repeats:YES];
+	}
+}
+
+- (void)stopGeneratingTimerTicks {
+	if (_updateTimer) {
+		[_updateTimer invalidate];
+		_updateTimer = nil;
+	}
+}
+
 - (void)save {
 	NSError *error = nil;
     
@@ -113,15 +126,13 @@
 
 - (void)startTimer {
 	_currentTimer = [NSTimer scheduledTimerWithTimeInterval:[[self currentTask] timeLeft] target:self selector:@selector(timerDone:) userInfo:nil repeats:NO];
-	_updateTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(updateTimer:) userInfo:nil repeats:YES];
+	[self startGeneratingTimerTicks];
 }
 
 - (void)stopTimer {
 	[_currentTimer invalidate];
 	_currentTimer = nil;
-	
-	[_updateTimer invalidate];
-	_updateTimer = nil;
+	[self stopGeneratingTimerTicks];
 }
 
 - (void)timerDone:(NSTimer *)timer {

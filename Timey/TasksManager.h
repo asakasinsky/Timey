@@ -31,6 +31,9 @@
 -(void)resetTimerForTask:(Task *)task;
 -(void)resetAllTimers;
 
+-(void)startGeneratingTimerTicks;
+-(void)stopGeneratingTimerTicks;
+
 -(void)save;
 
 @end
