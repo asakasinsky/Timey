@@ -12,7 +12,7 @@
 @class StatusItemView;
 @class TasksManager;
 
-@interface AppDelegate : NSObject <NSApplicationDelegate, NSWindowDelegate, NSTableViewDataSource, NSTableViewDelegate, TasksManagerDelegate>
+@interface AppDelegate : NSObject <NSApplicationDelegate, NSWindowDelegate, NSTableViewDataSource, NSTableViewDelegate, NSUserNotificationCenterDelegate, TasksManagerDelegate>
 
 @property (assign) IBOutlet NSPopover *popover;
 @property (assign) IBOutlet NSView *containerView;

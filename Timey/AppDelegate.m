@@ -43,6 +43,8 @@
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification {
 	NSLog(@"%@", [[self applicationFilesDirectory] path]);
 	
+	[[NSUserNotificationCenter defaultUserNotificationCenter] setDelegate:self];
+	
 	_launchAtloginController = [[LaunchAtLoginController alloc] init];
 	
 	[self statusItemView];
@@ -142,6 +144,15 @@
 }
 
 //
+// NSUserNotificationCenterDelegate Methods
+//
+#pragma mark - NSUserNotificationCenterDelegate Methods -
+
+- (BOOL)userNotificationCenter:(NSUserNotificationCenter *)center shouldPresentNotification:(NSUserNotification *)notification {
+	return YES;
+}
+
+//
 // TasksManagerDelegate Methods
 //
 #pragma mark - TasksManagerDelegate Methods -
@@ -151,7 +162,12 @@
 }
 
 - (void)timerFinishedForTask:(Task *)task {
-	// Play sound and present notification to the user
+	NSUserNotification *notification = [[NSUserNotification alloc] init];
+	[notification setTitle:[task title]];
+	[notification setInformativeText:@"Time's Up!"];
+	[notification setSoundName:NSUserNotificationDefaultSoundName];
+	
+	[[NSUserNotificationCenter defaultUserNotificationCenter] deliverNotification:notification];
 }
 
 - (void)timerStoppedForTask:(Task *)task {
