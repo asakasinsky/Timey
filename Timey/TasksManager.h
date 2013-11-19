@@ -23,13 +23,14 @@
 -(void)addTaskWithTitle:(NSString *)title andFormattedAllocatedTime:(NSString *)allocatedTime;
 -(void)removeTask:(Task *)task;
 
+-(BOOL)isCurrentTask:(Task *)task;
+
 -(void)startTimerForTask:(Task *)task;
 -(void)stopCurrentTimer;
 
 -(void)resetTimerForTask:(Task *)task;
 -(void)resetAllTimers;
 
--(void)reloadData;
 -(void)save;
 
 @end

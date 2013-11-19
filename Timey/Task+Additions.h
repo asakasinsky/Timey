@@ -15,6 +15,7 @@
 
 - (NSTimeInterval)timeLeft;
 - (NSString *)formattedTimeLeft;
+- (NSString *)formattedSecondsLeft;
 
 - (void)updateTimeRemaining;
 

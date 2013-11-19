@@ -119,11 +119,13 @@
 	NSTextField *cellTaskNameTextField = [view viewWithTag:1];
 	NSTextField *cellTimerTextField = [view viewWithTag:2];
 	NSImageView *cellTimeRunningImageView = [view viewWithTag:3];
+	NSTextField *cellTimerSecondsTextField = [view viewWithTag:4];
 	
 	Task *task = [[[self tasksManager] tasks] objectAtIndex:row];
 	[cellTaskNameTextField setStringValue:[task title]];
 	[cellTimerTextField setStringValue:[task formattedTimeLeft]];
-	[cellTimeRunningImageView setHidden:(task != [[self tasksManager] currentTask])];
+	[cellTimeRunningImageView setHidden:![[self tasksManager] isCurrentTask:task]];
+	[cellTimerSecondsTextField setStringValue:[task formattedSecondsLeft]];
 	
 	return view;
 }
@@ -143,6 +145,10 @@
 
 - (void)timerStoppedForTask:(Task *)task {
 	[[self tasksTableView] reloadData];
+}
+
+- (void)timerTickedFor:(Task *)task {
+	[[self tasksTableView] reloadDataForRowIndexes:[NSIndexSet indexSetWithIndex:[[[self tasksManager] tasks] indexOfObject:task]] columnIndexes:[NSIndexSet indexSetWithIndex:0]];
 }
 
 //

@@ -34,7 +34,7 @@
 
 - (NSTimeInterval)timeLeft {
 	if ([self timeStarted]) {
-		return ([[NSDate date] timeIntervalSinceReferenceDate] - [[[self timeStarted] dateByAddingTimeInterval:[[self allocatedTime] doubleValue]] timeIntervalSinceReferenceDate]) * -1;
+		return ([[NSDate date] timeIntervalSinceReferenceDate] - [[[self timeStarted] dateByAddingTimeInterval:[[self remainingTime] doubleValue]] timeIntervalSinceReferenceDate]) * -1;
 	} else {
 		return (NSTimeInterval)[[self remainingTime] doubleValue];
 	}
@@ -42,6 +42,12 @@
 
 - (NSString *)formattedTimeLeft {
 	return [Task stringFromTimeInterval:[self timeLeft]];
+}
+
+- (NSString *)formattedSecondsLeft {
+	NSInteger ti = (NSInteger)[self timeLeft];
+	NSInteger seconds = ti % 60;
+	return [NSString stringWithFormat:@".%02li", (long)seconds];
 }
 
 - (void)updateTimeRemaining {

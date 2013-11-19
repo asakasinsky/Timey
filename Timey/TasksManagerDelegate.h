@@ -15,5 +15,6 @@
 -(void)timerStartedForTask:(Task *)task;
 -(void)timerStoppedForTask:(Task *)task;
 -(void)timerFinishedForTask:(Task *)task;
+-(void)timerTickedFor:(Task *)task;
 
 @end
