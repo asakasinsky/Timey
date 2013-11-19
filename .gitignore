@@ -2,3 +2,5 @@
 *.xcbkptlist
 *.xcuserdatad
 */xcuserdata/*
+
+*.xccheckout

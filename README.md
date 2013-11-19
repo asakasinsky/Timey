@@ -10,3 +10,5 @@ notifies you when the timer for the current task is finished.
 
 You can save your projects and simply reset their timers before you start working
 every day.
+
+![alt tag](https://raw.github.com/jaderfeijo/Timey/master/Design/Add.fw.png)
