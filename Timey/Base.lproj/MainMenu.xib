@@ -771,7 +771,7 @@
                             <rect key="frame" x="100" y="13" width="139" height="11"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="Double-click to start or pause" id="LOk-tT-NXf">
-                                <font key="font" size="10" name="KozGoPro-Regular"/>
+                                <font key="font" size="10" name="KozGoPro-ExtraLight"/>
                                 <color key="textColor" name="controlShadowColor" catalog="System" colorSpace="catalog"/>
                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
@@ -908,7 +908,7 @@
                             </constraints>
                             <buttonCell key="cell" type="bevel" title="Save" bezelStyle="rounded" imagePosition="overlaps" alignment="center" imageScaling="proportionallyDown" inset="2" id="nXW-iv-VzW">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                <font key="font" size="13" name="KozGoPro-Light"/>
+                                <font key="font" size="13" name="KozGoPro-ExtraLight"/>
                             </buttonCell>
                             <connections>
                                 <action selector="saveTaskAction:" target="494" id="jfg-4l-eIC"/>
@@ -919,7 +919,7 @@
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             <buttonCell key="cell" type="bevel" title="&lt; Back" bezelStyle="rounded" imagePosition="overlaps" alignment="center" imageScaling="proportionallyDown" inset="2" id="Rjm-d0-hPh">
                                 <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
-                                <font key="font" size="13" name="KozGoPro-Light"/>
+                                <font key="font" size="13" name="KozGoPro-ExtraLight"/>
                             </buttonCell>
                             <connections>
                                 <action selector="backToTasksAction:" target="494" id="Gsf-nd-HCX"/>
