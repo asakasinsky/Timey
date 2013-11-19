@@ -40,6 +40,7 @@
 	Task *task = [[Task alloc] initWithEntity:[NSEntityDescription entityForName:@"Task" inManagedObjectContext:[self managedObjectContext]] insertIntoManagedObjectContext:[self managedObjectContext]];
 	[task setTitle:title];
 	[task setFormattedAllocatedTime:allocatedTime];
+	[task setRemainingTime:[task allocatedTime]];
 	[_tasks addObject:task];
 	[self save];
 }
