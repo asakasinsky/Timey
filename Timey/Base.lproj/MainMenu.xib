@@ -818,7 +818,7 @@
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <subviews>
                                                     <textField wantsLayer="YES" horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" tag="2" translatesAutoresizingMaskIntoConstraints="NO" id="ZFH-5n-p5C">
-                                                        <rect key="frame" x="251" y="3" width="83" height="33"/>
+                                                        <rect key="frame" x="248" y="3" width="83" height="33"/>
                                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                                         <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="00:00" id="f93-D4-eRc">
                                                             <font key="font" size="32" name="KozGoPro-ExtraLight"/>
