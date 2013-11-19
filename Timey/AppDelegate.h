@@ -7,10 +7,12 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "TasksManagerDelegate.h"
 
 @class StatusItemView;
+@class TasksManager;
 
-@interface AppDelegate : NSObject <NSApplicationDelegate, NSWindowDelegate, NSTableViewDataSource, NSTableViewDelegate>
+@interface AppDelegate : NSObject <NSApplicationDelegate, NSWindowDelegate, NSTableViewDataSource, NSTableViewDelegate, TasksManagerDelegate>
 
 @property (assign) IBOutlet NSPopover *popover;
 @property (assign) IBOutlet NSView *containerView;
@@ -23,11 +25,11 @@
 @property (assign) IBOutlet NSTextField *taskTimeTextField;
 
 @property (readonly, strong, nonatomic) StatusItemView *statusItemView;
+@property (readonly, strong, nonatomic) TasksManager *tasksManager;
 @property (readonly, strong, nonatomic) NSManagedObjectModel *managedObjectModel;
 @property (readonly, strong, nonatomic) NSPersistentStoreCoordinator *persistentStoreCoordinator;
 @property (readonly, strong, nonatomic) NSManagedObjectContext *managedObjectContext;
 
-- (IBAction)saveAction:(id)sender;
 - (IBAction)addTaskAction:(id)sender;
 - (IBAction)removeTaskAction:(id)sender;
 - (IBAction)resetTimerAction:(id)sender;

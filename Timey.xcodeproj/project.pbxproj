@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		95F22980183B1CCE00E0DE4C /* TasksManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 95F2297F183B1CCE00E0DE4C /* TasksManager.m */; };
 		9AA064F9183A2BE200C1F697 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9AA064F8183A2BE200C1F697 /* Cocoa.framework */; };
 		9AA06503183A2BE200C1F697 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9AA06501183A2BE200C1F697 /* InfoPlist.strings */; };
 		9AA06505183A2BE200C1F697 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 9AA06504183A2BE200C1F697 /* main.m */; };
@@ -37,6 +38,9 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		95F2297E183B1CCE00E0DE4C /* TasksManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TasksManager.h; sourceTree = "<group>"; };
+		95F2297F183B1CCE00E0DE4C /* TasksManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TasksManager.m; sourceTree = "<group>"; };
+		95F22981183B1CEC00E0DE4C /* TasksManagerDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = TasksManagerDelegate.h; sourceTree = "<group>"; };
 		9AA064F5183A2BE200C1F697 /* Timey.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Timey.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9AA064F8183A2BE200C1F697 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		9AA064FB183A2BE200C1F697 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -136,6 +140,9 @@
 				9AA06530183A2C4F00C1F697 /* Models */,
 				9AA6820A183AFECA008E109D /* Additions */,
 				9AA06532183A3A2D00C1F697 /* Views */,
+				95F2297E183B1CCE00E0DE4C /* TasksManager.h */,
+				95F2297F183B1CCE00E0DE4C /* TasksManager.m */,
+				95F22981183B1CEC00E0DE4C /* TasksManagerDelegate.h */,
 				9AA0650A183A2BE200C1F697 /* AppDelegate.h */,
 				9AA0650B183A2BE300C1F697 /* AppDelegate.m */,
 				9AA0652F183A2C4000C1F697 /* Resources */,
@@ -186,7 +193,6 @@
 		9AA06530183A2C4F00C1F697 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				9AA68217183B0746008E109D /* Additions */,
 				9AA68204183AF310008E109D /* Classes */,
 				9AA06510183A2BE300C1F697 /* Timey.xcdatamodeld */,
 			);
@@ -205,6 +211,7 @@
 		9AA68204183AF310008E109D /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				9AA68217183B0746008E109D /* Additions */,
 				9AA68200183AF302008E109D /* Task.h */,
 				9AA68201183AF302008E109D /* Task.m */,
 			);
@@ -329,6 +336,7 @@
 			files = (
 				9AA06512183A2BE300C1F697 /* Timey.xcdatamodeld in Sources */,
 				9AA6821B183B0759008E109D /* Task+Additions.m in Sources */,
+				95F22980183B1CCE00E0DE4C /* TasksManager.m in Sources */,
 				9AA06535183A3A3700C1F697 /* StatusItemView.m in Sources */,
 				9AA0650C183A2BE300C1F697 /* AppDelegate.m in Sources */,
 				9AA68203183AF302008E109D /* Task.m in Sources */,

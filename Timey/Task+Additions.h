@@ -16,12 +16,9 @@
 - (NSTimeInterval)timeLeft;
 - (NSString *)formattedTimeLeft;
 
-- (void)setFormattedAllocatedTime:(NSString *)allocatedTime;
+- (void)updateTimeRemaining;
 
-- (BOOL)isRunning;
-- (void)startTimer;
-- (void)stopTimer;
-- (void)resetTimer;
+- (void)setFormattedAllocatedTime:(NSString *)allocatedTime;
 
 - (NSComparisonResult)compareTitle:(Task *)task;
 

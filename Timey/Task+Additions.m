@@ -33,60 +33,27 @@
 }
 
 - (NSTimeInterval)timeLeft {
-	NSTimeInterval interval = 0;
-	
-	if ([self isRunning]) {
-		interval = ([[NSDate date] timeIntervalSinceReferenceDate] - [[[self timeStarted] dateByAddingTimeInterval:[[self allocatedTime] doubleValue]] timeIntervalSinceReferenceDate]) * -1;
+	if ([self timeStarted]) {
+		return ([[NSDate date] timeIntervalSinceReferenceDate] - [[[self timeStarted] dateByAddingTimeInterval:[[self allocatedTime] doubleValue]] timeIntervalSinceReferenceDate]) * -1;
 	} else {
-		interval = (NSTimeInterval)[[self remainingTime] doubleValue];
+		return (NSTimeInterval)[[self remainingTime] doubleValue];
 	}
-	
-	NSLog(@"%f", interval);
-	
-	return interval;
 }
 
 - (NSString *)formattedTimeLeft {
 	return [Task stringFromTimeInterval:[self timeLeft]];
 }
 
+- (void)updateTimeRemaining {
+	[self setRemainingTime:[NSNumber numberWithDouble:[self timeLeft]]];
+}
+
 - (void)setFormattedAllocatedTime:(NSString *)allocatedTime {
 	[self setAllocatedTime:[NSNumber numberWithDouble:[Task timeIntervalFromString:allocatedTime]]];
 }
 
-- (BOOL)isRunning {
-	if ([self timeStarted]) {
-		return YES;
-	} else {
-		return NO;
-	}
-}
-
-- (void)startTimer {
-	if (!runningTimer) {
-		runningTimer = [NSTimer scheduledTimerWithTimeInterval:[[self remainingTime] doubleValue] target:self selector:@selector(timerDone:) userInfo:nil repeats:NO];
-		[self setTimeStarted:[NSDate date]];
-	}
-}
-
-- (void)stopTimer {
-	[runningTimer invalidate];
-	runningTimer = nil;
-	
-	[self setRemainingTime:[NSNumber numberWithDouble:[self timeLeft]]];
-	[self setTimeStarted:nil];
-}
-
-- (void)resetTimer {
-	[self setRemainingTime:[self allocatedTime]];
-}
-
 - (NSComparisonResult)compareTitle:(Task *)task {
 	return [[self title] compare:[task title]];
-}
-
-- (void)timerDone:(NSTimer *)timer {
-	[self stopTimer];
 }
 
 @end

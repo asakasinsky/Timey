@@ -693,7 +693,7 @@
                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
                             </textFieldCell>
                         </textField>
-                        <button appearanceType="lightContent" translatesAutoresizingMaskIntoConstraints="NO" id="PBH-pN-6TJ">
+                        <button toolTip="New Task" appearanceType="lightContent" translatesAutoresizingMaskIntoConstraints="NO" id="PBH-pN-6TJ">
                             <rect key="frame" x="310" y="9" width="19" height="19"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             <buttonCell key="cell" type="bevel" bezelStyle="rounded" image="Add" imagePosition="overlaps" alignment="center" imageScaling="proportionallyDown" inset="2" id="PgN-ta-1bU">
@@ -704,7 +704,7 @@
                                 <action selector="addTaskAction:" target="494" id="bd8-Wi-50w"/>
                             </connections>
                         </button>
-                        <button appearanceType="lightContent" translatesAutoresizingMaskIntoConstraints="NO" id="e34-bI-8hb">
+                        <button toolTip="Delete Task" appearanceType="lightContent" translatesAutoresizingMaskIntoConstraints="NO" id="e34-bI-8hb">
                             <rect key="frame" x="9" y="9" width="19" height="19"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             <buttonCell key="cell" type="bevel" bezelStyle="rounded" image="Remove" imagePosition="overlaps" alignment="center" imageScaling="proportionallyDown" inset="2" id="pDh-AU-9bt">
@@ -732,7 +732,7 @@
                     <rect key="frame" x="0.0" y="0.0" width="338" height="37"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <subviews>
-                        <button appearanceType="lightContent" translatesAutoresizingMaskIntoConstraints="NO" id="lyq-bE-UXL">
+                        <button toolTip="Settings" appearanceType="lightContent" translatesAutoresizingMaskIntoConstraints="NO" id="lyq-bE-UXL">
                             <rect key="frame" x="310" y="9" width="19" height="19"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             <buttonCell key="cell" type="bevel" bezelStyle="rounded" image="Settings" imagePosition="overlaps" alignment="center" imageScaling="proportionallyDown" inset="2" id="vyZ-Bl-JTC">
@@ -740,7 +740,7 @@
                                 <font key="font" metaFont="system"/>
                             </buttonCell>
                         </button>
-                        <button appearanceType="lightContent" translatesAutoresizingMaskIntoConstraints="NO" id="Z1c-tM-KHi">
+                        <button toolTip="Reset Selected Timer" appearanceType="lightContent" translatesAutoresizingMaskIntoConstraints="NO" id="Z1c-tM-KHi">
                             <rect key="frame" x="9" y="9" width="19" height="19"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             <buttonCell key="cell" type="bevel" bezelStyle="rounded" image="Reset" imagePosition="overlaps" alignment="center" imageScaling="proportionallyDown" inset="2" id="3Nh-1C-hCA">
@@ -751,7 +751,7 @@
                                 <action selector="resetTimerAction:" target="494" id="HfB-UN-Ndm"/>
                             </connections>
                         </button>
-                        <button appearanceType="lightContent" translatesAutoresizingMaskIntoConstraints="NO" id="lwS-Yv-9Ds">
+                        <button toolTip="Reset All Timers" appearanceType="lightContent" translatesAutoresizingMaskIntoConstraints="NO" id="lwS-Yv-9Ds">
                             <rect key="frame" x="36" y="9" width="19" height="19"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                             <buttonCell key="cell" type="bevel" bezelStyle="rounded" image="ResetAll" imagePosition="overlaps" alignment="center" imageScaling="proportionallyDown" inset="2" id="9dv-ka-hdO">
@@ -786,14 +786,14 @@
                         <constraint firstItem="Z1c-tM-KHi" firstAttribute="top" secondItem="GDr-Jw-jR1" secondAttribute="top" constant="9" id="vcK-wN-FUa"/>
                     </constraints>
                 </customView>
-                <scrollView wantsLayer="YES" borderType="none" autohidesScrollers="YES" horizontalLineScroll="72" horizontalPageScroll="10" verticalLineScroll="72" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" translatesAutoresizingMaskIntoConstraints="NO" id="7kl-8a-AcM">
+                <scrollView wantsLayer="YES" borderType="none" autohidesScrollers="YES" horizontalLineScroll="19" horizontalPageScroll="10" verticalLineScroll="19" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" horizontalScrollElasticity="none" translatesAutoresizingMaskIntoConstraints="NO" id="7kl-8a-AcM">
                     <rect key="frame" x="0.0" y="37" width="338" height="371"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <clipView key="contentView" wantsLayer="YES" drawsBackground="NO" copiesOnScroll="NO" id="k2C-nk-JLH">
                         <rect key="frame" x="0.0" y="0.0" width="338" height="371"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <tableView wantsLayer="YES" verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnReordering="NO" columnSelection="YES" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" rowHeight="70" rowSizeStyle="automatic" viewBased="YES" id="ceR-7P-pI4">
+                            <tableView wantsLayer="YES" verticalHuggingPriority="750" allowsExpansionToolTips="YES" columnAutoresizingStyle="lastColumnOnly" columnReordering="NO" columnSelection="YES" columnResizing="NO" multipleSelection="NO" autosaveColumns="NO" rowSizeStyle="automatic" viewBased="YES" id="ceR-7P-pI4">
                                 <rect key="frame" x="0.0" y="0.0" width="338" height="371"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <size key="intercellSpacing" width="3" height="2"/>
@@ -813,7 +813,7 @@
                                         </textFieldCell>
                                         <tableColumnResizingMask key="resizingMask" resizeWithTable="YES"/>
                                         <prototypeCellViews>
-                                            <tableCellView identifier="TaskCell" wantsLayer="YES" id="Ly6-2v-joB">
+                                            <tableCellView identifier="TaskCell" toolTip="Double click to start or stop the timer for this task" wantsLayer="YES" id="Ly6-2v-joB">
                                                 <rect key="frame" x="1" y="1" width="335" height="70"/>
                                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                                 <subviews>

@@ -9,12 +9,7 @@
 #import "AppDelegate.h"
 #import "StatusItemView.h"
 #import "Task+Additions.h"
-
-@interface AppDelegate () {
-	NSArray *tasks;
-}
-
-@end
+#import "TasksManager.h"
 
 @implementation AppDelegate
 
@@ -26,6 +21,7 @@
 @synthesize taskNameTextField;
 @synthesize taskTimeTextField;
 @synthesize statusItemView = _statusItemView;
+@synthesize tasksManager = _tasksManager;
 @synthesize persistentStoreCoordinator = _persistentStoreCoordinator;
 @synthesize managedObjectModel = _managedObjectModel;
 @synthesize managedObjectContext = _managedObjectContext;
@@ -109,7 +105,7 @@
 #pragma mark - NSTableViewDataSource Methods -
 
 - (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView {
-	return [tasks count];
+	return [[[self tasksManager] tasks] count];
 }
 
 //
@@ -124,12 +120,29 @@
 	NSTextField *cellTimerTextField = [view viewWithTag:2];
 	NSImageView *cellTimeRunningImageView = [view viewWithTag:3];
 	
-	Task *task = [tasks objectAtIndex:row];
+	Task *task = [[[self tasksManager] tasks] objectAtIndex:row];
 	[cellTaskNameTextField setStringValue:[task title]];
 	[cellTimerTextField setStringValue:[task formattedTimeLeft]];
-	[cellTimeRunningImageView setHidden:![task isRunning]];
+	[cellTimeRunningImageView setHidden:(task != [[self tasksManager] currentTask])];
 	
 	return view;
+}
+
+//
+// TasksManagerDelegate Methods
+//
+#pragma mark - TasksManagerDelegate Methods -
+
+- (void)timerStartedForTask:(Task *)task {
+	[[self tasksTableView] reloadData];
+}
+
+- (void)timerFinishedForTask:(Task *)task {
+	// Play sound and present notification to the user
+}
+
+- (void)timerStoppedForTask:(Task *)task {
+	[[self tasksTableView] reloadData];
 }
 
 //
@@ -147,7 +160,7 @@
 	if (![(StatusItemView *)sender isHighlighted]) {
 		[[NSApplication sharedApplication] activateIgnoringOtherApps:YES];
 		[[self popover] showRelativeToRect:[sender bounds] ofView:sender preferredEdge:NSMinYEdge];
-		[self reloadData];
+		[[self tasksTableView] reloadData];
 	} else {
 		[[self popover] close];
 	}
@@ -156,25 +169,13 @@
 
 - (IBAction)tasksTableViewDoubleClickAction:(id)sender {
 	if ([[self tasksTableView] clickedRow] >= 0) {
-		Task *task = [tasks objectAtIndex:[[self tasksTableView] clickedRow]];
-		
-		if ([task isRunning]) {
-			[task stopTimer];
+		Task *task = [[[self tasksManager] tasks] objectAtIndex:[[self tasksTableView] clickedRow]];
+		if ([[self tasksManager] currentTask] == task) {
+			[[self tasksManager] stopCurrentTimer];
 		} else {
-			for (Task *t in tasks) {
-				[task stopTimer];
-			}
-			[task startTimer];
+			[[self tasksManager] startTimerForTask:task];
 		}
-		
-		[[self tasksTableView] reloadData];
 	}
-}
-
-- (void)reloadData {
-	NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"Task"];
-	tasks = [[[self managedObjectContext] executeFetchRequest:request error:nil] sortedArrayUsingSelector:@selector(compareTitle:)];
-	[[self tasksTableView] reloadData];
 }
 
 - (void)popToTasksView {
@@ -190,22 +191,18 @@
 	}];
 }
 
+- (Task *)selectedTask {
+	if ([[self tasksTableView] selectedRow] >= 0) {
+		return [[[self tasksManager] tasks] objectAtIndex:[[self tasksTableView] selectedRow]];
+	} else {
+		return nil;
+	}
+}
+
 //
 // AppDelegate Methods
 //
 #pragma mark - AppDelegate Methods -
-
-- (IBAction)saveAction:(id)sender {
-    NSError *error = nil;
-    
-    if (![[self managedObjectContext] commitEditing]) {
-        NSLog(@"%@:%@ unable to commit editing before saving", [self class], NSStringFromSelector(_cmd));
-    }
-    
-    if (![[self managedObjectContext] save:&error]) {
-        [[NSApplication sharedApplication] presentError:error];
-    }
-}
 
 - (IBAction)addTaskAction:(id)sender {
 	[containerView addSubview:addTaskView];
@@ -225,26 +222,17 @@
 }
 
 - (IBAction)removeTaskAction:(id)sender {
-	if ([[self tasksTableView] selectedRow] >= 0) {
-		Task *task = [tasks objectAtIndex:[[self tasksTableView] selectedRow]];
-		[[self managedObjectContext] deleteObject:task];
-		[self saveAction:sender];
-		[self reloadData];
-	}
+	[[self tasksManager] removeTask:[self selectedTask]];
+	[[self tasksTableView] reloadData];
 }
 
 - (IBAction)resetTimerAction:(id)sender {
-	if ([[self tasksTableView] selectedRow] >= 0) {
-		Task *task = [tasks objectAtIndex:[[self tasksTableView] selectedRow]];
-		[task resetTimer];
-		[[self tasksTableView] reloadData];
-	}
+	[[self tasksManager] resetTimerForTask:[self selectedTask]];
+	[[self tasksTableView] reloadData];
 }
 
 - (IBAction)resetAllTimersAction:(id)sender {
-	for (Task *task in tasks) {
-		[task resetTimer];
-	}
+	[[self tasksManager] resetAllTimers];
 	[[self tasksTableView] reloadData];
 }
 
@@ -253,14 +241,9 @@
 }
 
 - (IBAction)saveTaskAction:(id)sender {
-	Task *task = [[Task alloc] initWithEntity:[NSEntityDescription entityForName:@"Task" inManagedObjectContext:[self managedObjectContext]] insertIntoManagedObjectContext:[self managedObjectContext]];
-	[task setTitle:[taskNameTextField stringValue]];
-	[task setFormattedAllocatedTime:[taskTimeTextField stringValue]];
-	[task resetTimer];
-	[self saveAction:sender];
-	
-	[self reloadData];
+	[[self tasksManager] addTaskWithTitle:[taskNameTextField stringValue] andFormattedAllocatedTime:[taskTimeTextField stringValue]];
 	[self popToTasksView];
+	[[self tasksTableView] reloadData];
 }
 
 //
@@ -276,6 +259,14 @@
 		[_statusItemView setAction:@selector(togglePanel:)];
 	}
 	return _statusItemView;
+}
+
+- (TasksManager *)tasksManager {
+	if (!_tasksManager) {
+		_tasksManager = [[TasksManager alloc] initWithManagedObjectContext:[self managedObjectContext]];
+		[_tasksManager setDelegate:self];
+	}
+	return _tasksManager;
 }
 
 - (NSManagedObjectModel *)managedObjectModel {
