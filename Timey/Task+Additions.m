@@ -33,17 +33,11 @@
 }
 
 - (NSTimeInterval)timeLeft {
-	NSTimeInterval timeLeft = 0;
-	
 	if ([self timeStarted]) {
-		timeLeft = ([[NSDate date] timeIntervalSinceReferenceDate] - [[[self timeStarted] dateByAddingTimeInterval:[[self remainingTime] doubleValue]] timeIntervalSinceReferenceDate]) * -1;
+		return ([[NSDate date] timeIntervalSinceReferenceDate] - [[[self timeStarted] dateByAddingTimeInterval:[[self remainingTime] doubleValue]] timeIntervalSinceReferenceDate]) * -1;
 	} else {
-		timeLeft = (NSTimeInterval)[[self remainingTime] doubleValue];
+		return (NSTimeInterval)[[self remainingTime] doubleValue];
 	}
-	
-	NSLog(@"Time Left: %f for Task: %@", timeLeft, [self title]);
-	
-	return timeLeft;
 }
 
 - (NSString *)formattedTimeLeft {

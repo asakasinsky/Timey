@@ -82,6 +82,9 @@
 }
 
 - (void)resetTimerForTask:(Task *)task {
+	if ([self isCurrentTask:task]) {
+		[task setTimeStarted:[NSDate date]];
+	}
 	[task setRemainingTime:[task allocatedTime]];
 }
 
