@@ -23,4 +23,6 @@
 - (void)stopTimer;
 - (void)resetTimer;
 
+- (NSComparisonResult)compareTitle:(Task *)task;
+
 @end

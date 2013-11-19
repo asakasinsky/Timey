@@ -155,23 +155,25 @@
 }
 
 - (IBAction)tasksTableViewDoubleClickAction:(id)sender {
-	Task *task = [tasks objectAtIndex:[[self tasksTableView] clickedRow]];
-	
-	if ([task isRunning]) {
-		[task stopTimer];
-	} else {
-		for (Task *t in tasks) {
+	if ([[self tasksTableView] clickedRow] >= 0) {
+		Task *task = [tasks objectAtIndex:[[self tasksTableView] clickedRow]];
+		
+		if ([task isRunning]) {
 			[task stopTimer];
+		} else {
+			for (Task *t in tasks) {
+				[task stopTimer];
+			}
+			[task startTimer];
 		}
-		[task startTimer];
+		
+		[[self tasksTableView] reloadData];
 	}
-	
-	[[self tasksTableView] reloadData];
 }
 
 - (void)reloadData {
 	NSFetchRequest *request = [[NSFetchRequest alloc] initWithEntityName:@"Task"];
-	tasks = [[self managedObjectContext] executeFetchRequest:request error:nil];
+	tasks = [[[self managedObjectContext] executeFetchRequest:request error:nil] sortedArrayUsingSelector:@selector(compareTitle:)];
 	[[self tasksTableView] reloadData];
 }
 

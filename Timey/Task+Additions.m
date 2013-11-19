@@ -81,6 +81,10 @@
 	[self setRemainingTime:[self allocatedTime]];
 }
 
+- (NSComparisonResult)compareTitle:(Task *)task {
+	return [[self title] compare:[task title]];
+}
+
 - (void)timerDone:(NSTimer *)timer {
 	[self stopTimer];
 }
